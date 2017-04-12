@@ -1,0 +1,74 @@
+<div *ngIf='course'>
+  <form class="form-horizontal" name="courseForm" (ngSubmit)="updateCourse()" novalidate #courseForm="ngForm">
+
+    <div class="form-group">
+      <label for="inputId" class="col-sm-2 control-label">Id</label>
+      <div class="col-sm-6">
+        <!-- One way binding -->
+        <input type="text" class="form-control" id="inputId" [value]='course.Id' disabled>
+      </div>
+    </div>
+    
+    <div class="form-group" [ngClass]="{'has-error': title.invalid && title.dirty}">
+      <label for="inputTitle" class="col-sm-2 control-label">Title</label>
+      <div class="col-sm-6">
+        <!--<input type="text" class="form-control" id="inputTitle" name="inputTitle" ng-required="true" [value]='course.title' (change)="course.title = title.value" #title>-->
+        <!--Two-way binding-->
+        <input type="text" class="form-control" id="inputTitle" name="inputTitle" [(ngModel)]='course.title' required #title="ngModel">
+        <span [hidden]="title.valid || title.pristine" class="error">Title is a required field</span>
+      </div>
+    </div>
+
+    <div class="form-group" [ngClass]="{'has-error': course.authorId== 0 && author.dirty}">
+      <label for="inputAuthor" class="col-sm-2 control-label">Author</label>
+      <div class="col-sm-6">
+        <!--<select name="authorsSelect" class="form-control" id="inputAuthor" ng-options="author.Id as author.firstName+ ' '+author.lastName for author in authors" ng-required="true"  [value]='course.authorId'(change)="course.authorId = author.value" #author>-->
+        <select name="authorsSelect" class="form-control" id="inputAuthor" [(ngModel)]='course.authorId' required #author="ngModel">
+            <option value="">-- Select Author --</option>
+            <option *ngFor="let author of authors" [value]="author.Id">
+              {{author.firstName+ ' '+author.lastName}}
+            </option>
+        </select>
+        <span [hidden]="author.valid || author.pristine" class="error">Author is a required field</span>
+      </div>
+    </div>
+
+    <div class="form-group" [ngClass]="{'has-error': category.invalid && category.dirty}">
+      <label for="inputCategory" class="col-sm-2 control-label">Category</label>
+      <div class="col-sm-6">
+        <!--<input type="text" class="form-control" id="inputCategory" name="inputCategory" ng-required="true" [value]='course.category'
+          (change)="course.category = category.value" #category>-->
+        <input type="text" class="form-control" id="inputCategory" name="inputCategory" [(ngModel)]='course.category' required #category="ngModel">
+        <span [hidden]="category.valid || category.pristine" class="error">Category is a required field</span>
+      </div>
+    </div>
+
+    <div class="form-group" [ngClass]="{'has-error': length.invalid && length.dirty}">
+      <label for="inputLength" class="col-sm-2 control-label">Length</label>
+      <div class="col-sm-6">
+        <!--<input type="text" class="form-control" id="inputLength" name="inputLength" ng-required="true" ng-pattern="regex" [value]='course.length'
+          (change)="course.length = duration.value" #duration>-->
+        <input type="text" class="form-control" id="inputLength" name="inputLength" [(ngModel)]='course.length' required pattern="\d+:?\d*"
+          #length="ngModel">
+
+        <div [hidden]="!length.hasError('required') || length.valid || length.pristine" class="error">
+          <span>Length is a required field</span>
+          <br>
+        </div>
+
+        <div [hidden]="!length.hasError('pattern') || length.valid || length.pristine" class="error">
+          <span [hidden]="!length.hasError('pattern') || length.valid || length.pristine">Please enter a length in the following format mm:ss</span>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-2 col-sm-offset-2">
+        <button type="button" class="btn btn-primary" (click)="updateCourse()" [disabled]="courseForm.form.invalid">Save</button>
+        <button type="button" class="btn btn-danger" (click)="gotoCoursesList()">Cancel</button>
+      </div>
+    </div>
+
+  </form>
+</div>

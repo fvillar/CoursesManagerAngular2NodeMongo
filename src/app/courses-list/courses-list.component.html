@@ -1,9 +1,9 @@
 <div class="container">
   <div class='jumbotron'>
     <h1>Course Manager Angular 2</h1>
-    <button type="button" class="btn btn-primary col-md-1 col-md-offset-10" routerLink="/newCourse">
-            Add
-        </button>
+    <button type="button" class="btn btn-primary col-md-1 col-md-offset-10" routerLink="newCourse">
+        Add
+    </button>
   </div>
   <div>
     <table class="table table-hover table-condensed">
@@ -25,12 +25,12 @@
           <td>{{course.length}}</td>
           <td>{{course.category}}</td>
           <td>
-            <button type="button" class="btn btn-info" ui-sref="app.course({id: course.Id})">
-                Update
+            <button type="button" class="btn btn-info" [routerLink]="['/course/', course.Id]">
+              Update
             </button>
-            <button type="button" class="btn btn-danger" ng-click="deleteCourse({id: course.Id})">
+            <button type="button" class="btn btn-danger" (click)="deleteCourse(course.Id)">
               Delete
-              </button>
+            </button>
           </td>
         </tr>
       </tbody>

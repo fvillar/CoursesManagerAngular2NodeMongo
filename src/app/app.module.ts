@@ -10,13 +10,19 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import { ServicesService } from './services.service';
+import { FooterComponent } from './footer/footer.component';
+import { CourseComponent } from './course/course.component';
+import { NewCourseComponent } from './new-course/new-course.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     AboutUsComponent,
-    CoursesListComponent
+    CoursesListComponent,
+    FooterComponent,
+    CourseComponent,
+    NewCourseComponent
   ],
   imports: [
     BrowserModule,

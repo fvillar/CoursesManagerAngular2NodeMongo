@@ -18,8 +18,15 @@ export class CoursesListComponent implements OnInit {
   }
 
   getCourses(): void {
-    this._servicesService.getCourses()
+    this._servicesService
+      .getCourses()
       .then(courses => this.courses = courses);
+  }
+
+  deleteCourse(id: number) {    
+    this._servicesService
+      .deleteCourse(id)
+      .then( () => this.getCourses() )
   }
 
 }

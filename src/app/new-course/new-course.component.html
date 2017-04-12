@@ -1,0 +1,61 @@
+<div class="container content">
+  <form class="form-horizontal" name="courseForm" (ngSubmit)="addCourse()" novalidate #newCourseForm="ngForm">
+
+    <div class="form-group" [ngClass]="{'has-error': title.invalid && title.dirty}">
+      <label for="inputTitle" class="col-sm-2 control-label">Title</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" id="inputTitle" name="inputTitle" [(ngModel)]='course.title' required #title="ngModel">
+        <span [hidden]="title.valid || title.pristine" class="error">Title is a required field</span>
+      </div>
+    </div>
+
+    <div class="form-group" [ngClass]="{'has-error': course.authorId== 0 && author.dirty}">
+      <label for="inputAuthor" class="col-sm-2 control-label">Author</label>
+      <div class="col-sm-6">
+
+        <select name="authorsSelect" class="form-control" id="inputAuthor" [(ngModel)]='course.authorId' required #author="ngModel">
+            <option value="0">-- Select Author --</option>
+            <option *ngFor="let author of authors" [value]="author.Id">
+              {{author.firstName+ ' '+author.lastName}}
+            </option>
+        </select>
+
+        <span [hidden]="author.valid || author.pristine" class="error">Author is a required field</span>
+      </div>
+    </div>
+
+    <div class="form-group" [ngClass]="{'has-error': category.invalid && category.dirty}">
+      <label for="inputCategory" class="col-sm-2 control-label">Category</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" id="inputCategory" name="inputCategory" [(ngModel)]='course.category' required #category="ngModel">
+        <span [hidden]="category.valid || category.pristine" class="error">Category is a required field</span>
+      </div>
+    </div>
+
+    <div class="form-group" [ngClass]="{'has-error': length.invalid && length.dirty}">
+      <label for="inputLength" class="col-sm-2 control-label">Length</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" id="inputLength" name="inputLength" [(ngModel)]='course.length' required pattern="\d+:?\d*"
+          #length="ngModel">
+
+        <div [hidden]="!length.hasError('required') || length.valid || length.pristine" class="error">
+          <span>Length is a required field</span>
+          <br>
+        </div>
+
+        <div [hidden]="!length.hasError('pattern') || length.valid || length.pristine" class="error">
+          <span [hidden]="!length.hasError('pattern') || length.valid || length.pristine">Please enter a length in the following format mm:ss</span>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-2 col-sm-offset-2">
+        <button type="button" class="btn btn-primary" [disabled]="newCourseForm.form.invalid" (click)="addCourse()">Add</button>
+        <button type="button" class="btn btn-danger" (click)="gotoCoursesList()">Cancel</button>
+      </div>
+    </div>
+
+  </form>
+</div>

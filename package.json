@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve -o",
     "node": "node app.js",
     "build": "ng build",
     "test": "ng test",
@@ -27,6 +27,7 @@
     "core-js": "^2.4.1",
     "express": "^4.15.2",
     "jade": "^1.11.0",
+    "lodash": "^4.17.4",
     "mongojs": "^2.4.0",
     "morgan": "^1.8.1",
     "ng2-bootstrap": "^1.6.3",
