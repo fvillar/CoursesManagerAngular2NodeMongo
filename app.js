@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var open = require('open');
+var cors = require('cors');
 
 ////////////////////////////////////////////
 ////////////////  ROUTES  //////////////////
@@ -20,6 +21,9 @@ var authors = require('./routes/authors');
 // Port for the app
 const port = 7777;
 var app = express();
+// CORS support
+// Explanation: http://restlet.com/company/blog/2015/12/15/understanding-and-using-cors/
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
