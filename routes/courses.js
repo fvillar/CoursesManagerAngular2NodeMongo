@@ -12,7 +12,7 @@ var db = mongojs('mongodb://localhost/courses', ['courses', 'unique', 'authors']
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    db.courses.find({}, function (err, courses) {
+    db.courses.find({ username: req.query.username }, function (err, courses) {
         res.send(courses);
     });
 });
@@ -29,7 +29,7 @@ router.post('/', function (req, res) {
 
     // Do an auto-increments
     db.unique.findAndModify({
-        query: {},
+        query: {type: 'courses'},
         update: { $inc: { id: 1 } },
         new: true
     }, function (err, v) {
@@ -43,7 +43,8 @@ router.post('/', function (req, res) {
                 'authorName': author.firstName + ' ' + author.lastName,
                 'authorId': parseInt(data.authorId),
                 'length': data.length,
-                'category': data.category
+                'category': data.category,                
+                'username': data.username
             };
 
             db.courses.save(saveCourse, function (err) {

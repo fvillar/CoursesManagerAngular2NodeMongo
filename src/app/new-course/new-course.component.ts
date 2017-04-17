@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 
 import { ServicesService } from '../services.service';
-import { Course } from '../models/course';
-import { Author } from '../models/author';
+import  Course  from '../models/course';
+import Author from '../models/author';
 
 @Component({
   selector: 'app-new-course',
@@ -19,15 +19,17 @@ export class NewCourseComponent implements OnInit {
     private _servicesService: ServicesService) { }
 
   ngOnInit() {
-    this.course = {
-      Id: 0,
-      title: '',
-      authorName: '',
-      authorId: 0,
-      length: '',
-      category: '',
-      username: ''
-    }
+    // this.course = {
+    //   Id: 0,
+    //   title: '',
+    //   authorName: '',
+    //   authorId: 0,
+    //   length: '',
+    //   category: '',
+    //   username: ''
+    // }
+
+    this.course = new Course(0,'',0,'','', this._servicesService.getUsername());
 
     // Get the Authors
     this._servicesService
@@ -36,8 +38,9 @@ export class NewCourseComponent implements OnInit {
   }
 
   gotoCoursesList() {
-    let link = ['/courses'];
-    this.router.navigate(link);
+    // let link = ['/courses'];
+    // this.router.navigate(link);
+    window.history.back();
   }
 
   addCourse() {

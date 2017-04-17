@@ -13,6 +13,7 @@ import { ServicesService } from './services.service';
 import { FooterComponent } from './footer/footer.component';
 import { CourseComponent } from './course/course.component';
 import { NewCourseComponent } from './new-course/new-course.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { NewCourseComponent } from './new-course/new-course.component';
     CoursesListComponent,
     FooterComponent,
     CourseComponent,
-    NewCourseComponent
+    NewCourseComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

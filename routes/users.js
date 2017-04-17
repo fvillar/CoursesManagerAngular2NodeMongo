@@ -9,19 +9,7 @@ var router = express.Router();
 var mongojs = require('mongojs');
 var db = mongojs('mongodb://localhost/courses', ['users']);
 
-router.get('/', function (req, res, next) {
-  db.users.find({}, function (err, users) {
-    res.send(users);
-  });
-});
-
-router.get('/login/:username', function (req, res) {
-  db.users.find({ username: req.params.username }, function (err, user) {
-    res.send(user);
-  });
-});
-
-router.post('/', function (req, res) {
+router.post('/register', function (req, res) {
 
   var data = req.body;
 
@@ -37,5 +25,31 @@ router.post('/', function (req, res) {
   });
 });
 
+router.post('/', function (req, res) {
+  var data = req.body;
+
+  var user = {
+    'username': data.username,
+    'password': data.password
+  };
+
+  if (!user.username || user.username == '') {
+    res.status(400).json({ accessGranted: false });
+  }
+
+  if (!user.password || user.password == '') {
+    res.status(400).json({ accessGranted: false });
+  }
+
+  db.users.findOne({ username: user.username }, function (err, dbuser) {
+    if (err) throw err;
+    if (user.password == dbuser.password) {
+      res.status(200).json({ accessGranted: true });
+    } else {
+      res.status(401).json({ accessGranted: false });
+    }
+  });
+
+});
 
 module.exports = router;

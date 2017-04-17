@@ -1,6 +1,8 @@
-export interface Author {
-    _id: string,
-    Id: number,
-    firstName: string,
-    lastName: string
+export default class Author {
+    constructor(
+        _id: string,
+        Id: number,
+        firstName: string,
+        lastName: string
+    ) { }
 }

@@ -4,8 +4,8 @@ import _ from 'lodash';
 import 'rxjs/add/operator/switchMap';
 
 import { ServicesService } from '../services.service';
-import { Course } from '../models/course';
-import { Author } from '../models/author';
+import Course from '../models/course';
+import Author from '../models/author';
 
 @Component({
   selector: 'app-course',
@@ -38,8 +38,9 @@ export class CourseComponent implements OnInit {
   }
 
   gotoCoursesList() {
-    let link = ['/courses'];
-    this.router.navigate(link);
+    // let link = ['/courses'];
+    // this.router.navigate(link);
+    window.history.back();
   }
 
   updateCourse() {
