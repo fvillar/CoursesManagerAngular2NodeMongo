@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var open = require('open');
 var cors = require('cors');
+var expressJWT = require('express-jwt');
 
 ////////////////////////////////////////////
 ////////////////  ROUTES  //////////////////
@@ -45,6 +46,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// JWT for Express
+var unprotectedPath = ['/', '/users', '/authors'];
+app.use(expressJWT({ secret: 'TOPSECRET' }).unless({ path: unprotectedPath }));
 
 ////////////////////////////////////////////
 //////////////  USE ROUTES  ////////////////

@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var jwt = require('jsonwebtoken');
 
 //////////////////////////////////
 //          /users            //
@@ -34,19 +35,20 @@ router.post('/', function (req, res) {
   };
 
   if (!user.username || user.username == '') {
-    res.status(400).json({ accessGranted: false });
+    res.status(400).json();
   }
 
   if (!user.password || user.password == '') {
-    res.status(400).json({ accessGranted: false });
+    res.status(400).json();
   }
 
   db.users.findOne({ username: user.username }, function (err, dbuser) {
     if (err) throw err;
     if (user.password == dbuser.password) {
-      res.status(200).json({ accessGranted: true });
+      var myToken = jwt.sign({ username: user.username}, 'TOPSECRET');
+      res.status(200).json({token: myToken});
     } else {
-      res.status(401).json({ accessGranted: false });
+      res.status(401).json();
     }
   });
 

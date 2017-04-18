@@ -11,6 +11,7 @@ import Login from './models/login';
 export class ServicesService {
   private url = 'http://localhost:7777';
   public username = '';
+  public token = '';
 
   constructor(private http: Http) { }
 
@@ -22,19 +23,27 @@ export class ServicesService {
     this.username = username;
   }
 
+  getToken(): string {
+    return this.token;
+  }
+
+  setToken(newToken: string){
+    this.token = newToken;
+  }
+
   //////////////////////
   // Async Functions  //
   //////////////////////
 
   getCourses(): Promise<Course[]> {
-    return this.http.get(`${this.url}/courses?username=${this.getUsername()}`)
+    return this.http.get(`${this.url}/courses?username=${this.getUsername()}`, { headers: this.getHeaders() })
       .toPromise()
       .then(response => response.json() as Course[])
       .catch(this.handleError);
   }
 
   getCourse(id: number): Promise<Course> {
-    return this.http.get(`${this.url}/courses/${id}`)
+    return this.http.get(`${this.url}/courses/${id}`, { headers: this.getHeaders() })
       .toPromise()
       .then(response => response.json() as Course)
       .catch(this.handleError);
@@ -73,7 +82,7 @@ export class ServicesService {
 
   login(login: Login): Promise<Login> {    
     return this.http
-      .post(`${this.url}/users`, login, { headers: this.getHeaders() })
+      .post(`${this.url}/users`, login)
       .toPromise()
       .then(response => response.json() as Login)
       .catch(this.handleError);
@@ -82,6 +91,7 @@ export class ServicesService {
   private getHeaders() {
     let headers = new Headers();
     headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer '+this.token)
     return headers;
   }
 
